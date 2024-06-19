@@ -1,8 +1,12 @@
 local M = {}
 
+function M.format()
+  vim.cmd("!autopep8 -i %")
+end
+
 function M.pipeline()
   local ut = require("sandbox.utils")
-  ut.format("py")
+  M.format()
   vim.cmd("w")
   ut.execute("python3 %")
 end

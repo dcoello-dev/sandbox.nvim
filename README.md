@@ -10,15 +10,11 @@ I also find my self going through my github projects trying to find implementati
 
 whit this two things in mins I decided to create another notes app, but on this case I want to create a mix of godbolt and notes application where to develop my small ideas and have the chance to come back to those implementations and check how I did it in an easy and flexible workflow.
 
-Due I am a neovim user I decided to integrate this functionality in a neovim plugin, but most of the job is done in a python script, so it should be easy to create wrappers for other environments.
-
 ## principles
 
 This plugin is based on a few key ideas:
 - each idea is self contained in one file, if you need more than one file it is not an idea, it is a project.
 - each idea can have implementations in several languages, all implementations will be stored on same folder so you can check how the same thing can be done in different languages.
-- functionality need to be extremely easy to use, same as godbolt.
-- at the moment it is a neovim plugin but it is not just a neovim plugin, sandbox implementation shall allow integration with other environments.
 - each idea can be explained in the source code as comments, if it is not enough you can write a markdown version of the idea.
 
 ## installation
@@ -29,12 +25,15 @@ Just install neovim plugin, it depends on telescope, toggleterm and glow.
 
 ```lua
 {
-  'dcoello-dev/sandbox',
+  'dcoello-dev/sandbox.nvim',
   dependencies = {
     'nvim-telescope/telescope.nvim',
     'akinsho/toggleterm.nvim',
     'ellisonleao/glow.nvim',
   },
+  config = function
+    require("sandbox").setup({storage_path="~/path/to/your/ideas/"})
+  end
 },
 ```
 
