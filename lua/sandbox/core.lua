@@ -5,8 +5,9 @@ local ut = require("sandbox.utils")
 function M.generate_meta_table(text)
   local ret = {}
   for line in string.gmatch(text, "[^\r\n]+") do
-    m,n = string.match(line,"sandbox_([a-z]*): ([a-zA-z]*)")
+    m,n = string.match(line,"sandbox_([a-z]*): ([^\r\n]*)")
     if m ~= nil then 
+      n = n:gsub("%)","")
       ret[m] = n 
     end
   end
