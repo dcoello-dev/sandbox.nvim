@@ -2,6 +2,8 @@
 
 notes as code.
 
+This plugin is a wrapper of [ideas-sandbox](https://github.com/dcoello-dev/ideas-sandbox) cli tool.
+
 There are a lot of notes applications around there (notion, obsian etc etc) but as a developer even if I write a lot of notes I rarely found myself coming back and reading it.
 
 I use a lot godbolt to draft ideas before implement it or to share it with other devs to show or explain ideas but it is difficult for me to track all the godbolts that I write.
@@ -19,32 +21,40 @@ This plugin is based on a few key ideas:
 
 ## installation
 
-I recommend to fork this repository to keep your ideas close to the framework so you can adapt it to your needs.
+`sandbox.nvim` is based on [ideas-sandbox](https://github.com/dcoello-dev/ideas-sandbox) cli tool, first install it:
 
-Just install neovim plugin, it depends on telescope, toggleterm and glow.
+```bash
+pip install ideas-sandbox
+```
+
+Then install neovim plugin, it depends on telescope and toggleterm.
 
 ```lua
-{
-  'dcoello-dev/sandbox.nvim',
-  dependencies = {
-    'nvim-telescope/telescope.nvim',
-    'akinsho/toggleterm.nvim',
-    'ellisonleao/glow.nvim',
+  {
+    'dcoello-dev/sandbox.nvim',
+    dependencies = {
+      'nvim-telescope/telescope.nvim',
+      'akinsho/toggleterm.nvim',
+    },
+    config= function()
+      require("sandbox").setup({
+        work_idea_path="/home/user/codebase/",
+        ideas_path="/home/user/codebase/",
+        execute_km = '<leader>gw',
+        open_km = '<leader>gl',
+        work_idea_km = '<leader>gm'
+      })
+    end
   },
-  config = function
-    require("sandbox").setup({storage_path="~/path/to/your/ideas/"})
-  end
-},
 ```
 
 ## usage
 
 There are three commands:
-- SReset cpp/py/md/bash : creates a new main of this language.
-- SLoad : search through ideas.
-- SSave : save current idea.
+- **SReset** cpp/py/md/bash : creates a new main of this language.
+- **SSave** : save current idea.
 
-There are a few keymaps:
-- <leader>gw : run pipeline for current idea.
-- <leader>gm : go to current idea.
-- <leader>gl : search ideas.
+There are a few keymaps you can override it in your conf:
+- **<leader>gw** : run pipeline for current idea.
+- **<leader>gm** : go to current idea.
+- **<leader>gl** : search ideas.
