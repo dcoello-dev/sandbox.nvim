@@ -15,11 +15,3 @@ vim.api.nvim_create_user_command(
   end,
   { nargs = '?' }
 )
-
-vim.api.nvim_create_user_command(
-  "SLoad",
-  function(opts)
-    sn.load(opts.args)
-  end,
-  { nargs = '?' }
-)
