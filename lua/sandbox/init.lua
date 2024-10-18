@@ -1,8 +1,9 @@
 local M = {}
 
 local default_config = {
-  work_idea_path = "~/doc/",
-  ideas_path = "~/doc/",
+  work_idea_path = os.getenv("SANDBOX_IDEAS"),
+  ideas_path = os.getenv("SANDBOX_IDEAS"),
+  conf_path = os.getenv("SANDBOX_CONF"),
   execute_km = '<leader>gw',
   open_km = '<leader>gl',
   work_idea_km = '<leader>gm'
@@ -16,17 +17,17 @@ local function execute(cmd)
   vim.cmd(string.format("2TermExec direction=vertical display_name=exe size=80 cmd='%s'", cmd))
 end
 
-local function reset_idea(ext, ideas_path, work_idea_path)
-  os.execute(string.format("sandbox -i %s reset -e %s -o %s",ideas_path, ext, work_idea_path))
+local function reset_idea(ext, ideas_path, work_idea_path, conf_path)
+  os.execute(string.format("sandbox -c %s -i %s reset -e %s -o %s", conf_path, ideas_path, ext, work_idea_path))
   open_work_idea()
 end
 
-local function save_idea(ideas_path, work_idea_path)
-  os.execute(string.format("sandbox -i %s save -p %s", ideas_path, work_idea_path))
+local function save_idea(ideas_path, work_idea_path, conf_path)
+  os.execute(string.format("sandbox -c %s -i %s save -p %s", conf_path, ideas_path, work_idea_path))
 end
 
-local function execute_idea(idea)
-  execute(string.format("sandbox execute -p %s", idea))
+local function execute_idea(idea, conf_path)
+  execute(string.format("sandbox -c %s execute -p %s",conf_path, idea))
 end
 
 function M.setup(options)
@@ -42,15 +43,15 @@ function M.setup(options)
 end
 
 function M.execute()
-  execute_idea(vim.fn.expand('%'))
+  execute_idea(vim.fn.expand('%'), M.options.conf_path)
 end
 
 function M.reset(opts)
-  reset_idea(opts, M.options.ideas_path, M.options.work_idea_path)
+  reset_idea(opts, M.options.ideas_path, M.options.work_idea_path, M.options.conf_path)
 end
 
 function M.save(opts)
-  save_idea(M.options.ideas_path, M.options.work_idea_path)
+  save_idea(M.options.ideas_path, M.options.work_idea_path, M.options.conf_path)
 end
 
 function M.load(opts)

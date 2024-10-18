@@ -1,0 +1,107 @@
+[cpp]
+ext = "cpp"
+execution = "g++ ${file_path} -o out && ./out && rm out"
+format = "clang-format -i ${file_path}"
+template = """// sandbox_idea:
+// sandbox_name:
+// sandbox_description:
+// sandbox_env: cpp
+
+#include <iostream>
+
+int main(void) {
+    std::cout << "Hello World!" << std::endl;
+    return 0;
+}"""
+
+[python]
+ext = "py"
+execution = "python3 ${file_path}"
+format = "autopep8 -i ${file_path}"
+template = """# sandbox_idea: 
+# sandbox_name: 
+# sandbox_description: 
+# sandbox_env: python
+
+if __name__ == "__main__":
+    print("Hello World!")
+"""
+
+[regex]
+ext = "py"
+execution = "python3 ${file_path}"
+format = "autopep8 -i ${file_path}"
+template = """# sandbox_idea: regex/
+# sandbox_name: 
+# sandbox_description: 
+# sandbox_env: regex
+
+import re
+import json
+
+INPUT_TEXT=\"\"\"
+
+\"\"\"
+
+INPUT_REGEX=r" "
+
+if __name__ == "__main__":
+    print(json.dumps(list(re.findall(INPUT_REGEX, INPUT_TEXT)), indent=2))
+"""
+
+[bash]
+ext = "sh"
+execution = "bash ${file_path}"
+format = ""
+template = """# sandbox_idea: 
+# sandbox_name: 
+# sandbox_description: 
+# sandbox_env: bash
+
+echo("Hello World!")
+"""
+
+[markdown]
+ext = "md"
+execution = "glow ${file_path}"
+format = ""
+template = """[//]: # (sandbox_idea: )
+[//]: # (sandbox_name: )
+[//]: # (sandbox_description: )
+[//]: # (sandbox_env: markdown)
+
+# IDEA
+"""
+
+[echo]
+ext = ""
+execution = "batcat ${file_path}"
+format = ""
+template = """"""
+
+[xclip]
+ext = ""
+execution = "xclip -sel clip ${file_path}"
+format = ""
+template = """"""
+
+[mermaid]
+ext = "mmd"
+execution = "F_PATH=$(realpath ${file_path}) && DIR=$(dirname $F_PATH) && FILE=$(basename ${file_path}) && docker run --rm -u `id -u`:`id -g` -v $DIR:/data/ minlag/mermaid-cli -i $FILE && wslview ${file_path}.svg && rm ${file_path}.svg"
+format = ""
+template = """%% sandbox_idea: 
+%% sandbox_name: 
+%% sandbox_description: 
+%% sandbox_env: mermaid
+
+classDiagram
+    namespace dmcl {
+        class Implementation 
+    }
+    namespace mock {
+        class IApplication{
+            <<Interface>>
+        }
+    }
+    Implementation --|> IApplication
+"""
